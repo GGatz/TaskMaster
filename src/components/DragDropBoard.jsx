@@ -2,40 +2,36 @@ import React, { useState } from 'react';
 import { DragDropContext } from '@hello-pangea/dnd';
 import Column from './Column';
 
-const initialData = {
-  columns: {
-    red: {
-      id: 'red',
-      title: 'Red Column',
-      color: '#006a72ff',
-      items: [
-        { id: '1', content: 'Red Item 1' },
-        { id: '2', content: 'Red Item 2' },
-      ],
+function DragDropBoard() {
+  const [data, setData] = useState(() => ({
+    columns: {
+      red: {
+        id: 'red',
+        title: 'Red Column',
+        colorKey: 'red',
+        items: [
+          { id: '1', content: 'Red Item 1' },
+          { id: '2', content: 'Red Item 2' },
+        ],
+      },
+      green: {
+        id: 'green',
+        title: 'Green Column',
+        colorKey: 'green',
+        items: [
+          { id: '3', content: 'Green Item 1' },
+          { id: '4', content: 'Green Item 2' },
+        ],
+      },
+      // etc.
     },
-    green: {
-      id: 'green',
-      title: 'Green Column',
-      color: '#072066ff',
-      items: [
-        { id: '3', content: 'Green Item 1' },
-        { id: '4', content: 'Green Item 2' },
-      ],
-    },
-    blue: {
-      id: 'blue',
-      title: 'Blue Column',
-      color: '#8fb408ff',
-      items: [
-        { id: '5', content: 'Blue Item 1' },
-        { id: '6', content: 'Blue Item 2' },
-      ],
-    },
-  },
-};
+  }));
 
-export default function DragDropBoard() {
-  const [data, setData] = useState(initialData);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+
+  const onSelectTask = (taskId) => {
+    setSelectedTaskId(taskId);
+  };
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -90,9 +86,16 @@ export default function DragDropBoard() {
         }}
       >
         {Object.entries(data.columns).map(([id, col]) => (
-          <Column key={id} column={col} />
+          <Column
+            key={id}
+            column={col}
+            onSelectTask={onSelectTask}
+            selectedTaskId={selectedTaskId}
+          />
         ))}
       </div>
     </DragDropContext>
   );
 }
+
+export default DragDropBoard;

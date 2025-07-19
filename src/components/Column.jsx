@@ -1,32 +1,31 @@
 import React from 'react';
 import { Droppable } from '@hello-pangea/dnd';
-import Entry from './Entry';
+import TaskCard from './TaskCard';
 
-export default function Column({ column }) {
+export default function Column({ column, onSelectTask, selectedTask }) {
   return (
-    <Droppable droppableId={column.id}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          style={{
-            flex: '1 1 0',
-            minWidth: '280px',
-            backgroundColor: column.color,
-            padding: '12px',
-            borderRadius: '8px',
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <h3 style={{ textAlign: 'center' }}>{column.title}</h3>
-          {column.items.map((item, index) => (
-            <Entry key={item.id} item={item} index={index} color={column.color} />
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <div style={{ minWidth: '250px', backgroundColor: '#50830dff', padding: '8px', borderRadius: '8px' }}>
+      <h3 style={{ color: column.color }}>{column.title}</h3>
+      <Droppable droppableId={column.id}>
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            style={{ minHeight: '100px' }}
+          >
+            {column.items.map((item, index) => (
+              <TaskCard
+                key={item.id}
+                task={item}
+                index={index}
+                onSelectTask={onSelectTask}
+                isSelected={selectedTask?.id === item.id}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </div>
   );
 }

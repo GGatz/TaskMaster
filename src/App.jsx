@@ -1,8 +1,13 @@
-import React from 'react';
-import DragDropBoard from './components/DragDropBoard';
-function App() {
-  return<div> 
-  </div>
-}
+import React, { useState } from 'react';
+import DragDropBoard from './components/DragDropBoard.jsx';// your working drag drop board
 
-export default App;
+export default function Board() {
+const [selectedTask, setSelectedTask] = useState(null);
+
+  return (
+    <div>
+      <h1>Task Tracker</h1>
+      <DragDropBoard />
+    </div>
+  );
+}

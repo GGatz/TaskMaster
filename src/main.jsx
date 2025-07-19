@@ -1,6 +1,5 @@
-
+import React from 'react';
 <script src="http://localhost:8097"></script>
-import * as react from "react";
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

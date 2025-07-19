@@ -1,20 +1,24 @@
 // src/server/server.js
 import express from 'express';
 import cors from 'cors';
+import taskRoutes from './routes/tasks.js';
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
-app.use(cors());
-app.use(express.json());
+// Middleware
+app.use(cors()); // Enable CORS for all origins (adjust if needed)
+app.use(express.json()); // Parse JSON request bodies
 
-app.get('/api/tasks', (req, res) => {
-  res.json([
-    { id: 1, title: 'Example Task', completed: false },
-    { id: 2, title: 'Another Task', completed: true }
-  ]);
+// Routes
+app.use('/api/tasks', taskRoutes);
+
+// Root route (optional)
+app.get('/', (req, res) => {
+  res.send('Task Tracker API is running');
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`Backend API is running on http://localhost:${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
