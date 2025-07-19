@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+</head>
+<body>
+    <h1>Task Tracker</h1>
+    <form id="taskForm">
+        <input type="text" id="title" placeholder="Title" required />
+        <input type="text" id="description" placeholder="Description" />
+        <button type="submit">Add Task</button>
+    </form>
+    <ul id="taskList"></ul>
+
+    <script>
+        async function fetchTasks() {
+            const res = await fetch('/api/tasks');
+            const tasks = await res.json();
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.textContent = `${task.title} - ${task.description}`;
+                list.appendChild(li);
+            });
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            await fetch('/api/tasks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, description, completed: false })
+            });
+            document.getElementById('taskForm').reset();
+            fetchTasks();
+        });
+
+        fetchTasks();
+    </script>
+</body>
+</html>
