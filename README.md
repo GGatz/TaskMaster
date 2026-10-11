@@ -1,3 +1,11 @@
+# TaskMaster
+
+> **New:** a Notion-style workspace (nested pages, block editor, table / board / list / gallery / calendar databases)
+> lives in [`workspace/`](workspace/README.md). Start it with `cd workspace && npm install && npm run dev`.
+> The original kanban scaffold below is untouched.
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
