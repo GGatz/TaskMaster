@@ -1,26 +1,13 @@
-import React from 'react';
-<script src="http://localhost:8097"></script>
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import {useWindowDimensions} from 'react'
-import App from './App.jsx'
-import DragDropBoard from './components/DragDropBoard'
+import { createRoot } from 'react-dom/client';
+import { WorkspaceProvider } from './lib/store.jsx';
+import App from './App.jsx';
+import './styles/base.css';
+import './styles/sidebar.css';
+import './styles/editor.css';
+import './styles/database.css';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <div style={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '16px',
-    padding: '16px',
-    width: '100%',
-    maxWidth: '1200px',
-    margin: '0 auto',
-    boxSizing: 'border-box',
-  }}>
-      <DragDropBoard/>
-    </div>
-    
-  </StrictMode>,
-)
+  <WorkspaceProvider>
+    <App />
+  </WorkspaceProvider>,
+);
